@@ -659,6 +659,7 @@ MonoBehaviour:
   - {fileID: 742829420}
   - {fileID: 1983595607}
   _MoveTime: 1
+  _SwipeThreeshold: 0.01
 --- !u!1 &1983595606
 GameObject:
   m_ObjectHideFlags: 0

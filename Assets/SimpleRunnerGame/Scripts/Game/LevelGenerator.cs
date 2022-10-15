@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class LevelGenerator : MonoBehaviour
 
     private float _CurrentSpeed;
     private int _Score;
+    
     private void Start()
     {
         _ActiveTiles = new Queue<GameObject>();

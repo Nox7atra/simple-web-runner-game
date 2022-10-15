@@ -6,8 +6,10 @@ public class Player : MonoBehaviour
     [SerializeField] private int _Lives = 0;
     [SerializeField] private Transform[] _Positions;
     [SerializeField] private float _MoveTime = 1;
+    [SerializeField] private float _SwipeThreeshold = 10;
     private int _CurrentPosition;
     private Coroutine _MoveCoroutine;
+    private Vector3? _TouchStart;
     private void Awake()
     {
         _CurrentPosition = 1;
@@ -15,6 +17,36 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (Input.touchCount > 0)
+        {
+            var touch = Input.touches[0];
+            if (Input.GetMouseButtonDown(0))
+            {
+                _TouchStart = touch.position;
+            }
+
+            if (touch.phase == TouchPhase.Moved && _TouchStart.HasValue)
+            {
+                if (Vector3.Distance(touch.position, _TouchStart.Value) > _SwipeThreeshold)
+                {
+                    if (touch.position.x - _TouchStart.Value.x < 0)
+                    {
+                        MoveLeft();
+                    }
+                    else
+                    {
+                        MoveRight();
+                    }
+
+                    _TouchStart = null;
+                }
+            }
+
+            if (touch.phase == TouchPhase.Ended)
+            {
+                _TouchStart = null;
+            }
+        }
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             MoveLeft();
