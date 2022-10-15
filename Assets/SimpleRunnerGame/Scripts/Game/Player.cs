@@ -10,9 +10,11 @@ public class Player : MonoBehaviour
     private int _CurrentPosition;
     private Coroutine _MoveCoroutine;
     private Vector3? _TouchStart;
+    private Camera _Camera;
     private void Awake()
     {
         _CurrentPosition = 1;
+        _Camera = Camera.main;
     }
 
     private void Update()
@@ -61,7 +63,8 @@ public class Player : MonoBehaviour
     public void Hit()
     {
         _Lives--;
-        WebglBridge.SetFloatingText(0.5f, 0.2f, $"-Live");
+        var playerPos = _Camera.WorldToViewportPoint(transform.position);
+        WebglBridge.SetFloatingText(playerPos.x, playerPos.y, $"{_Lives}/3 Lives");
         if (_Lives == 0)
         {
             WebglBridge.GameOver();

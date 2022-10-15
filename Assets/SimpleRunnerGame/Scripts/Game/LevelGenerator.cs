@@ -15,12 +15,20 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private float _StartLevelSpeed = 5;
     [SerializeField] private float _SpeedAcceleration = 0.5f;
     [SerializeField] private int _VisibleTilesCount = 10;
+    [SerializeField] private Player _Player;
+    
     private List<GameObject> _GameTilesPool;
     private Queue<GameObject> _ActiveTiles;
 
     private float _CurrentSpeed;
     private int _Score;
-    
+    private Camera _Camera;
+
+    private void Awake()
+    {
+        _Camera = Camera.main;
+    }
+
     private void Start()
     {
         _ActiveTiles = new Queue<GameObject>();
@@ -83,7 +91,8 @@ public class LevelGenerator : MonoBehaviour
         _CurrentSpeed += _SpeedAcceleration;
         _Score += ScoreAddition;
         WebglBridge.UpdateScore(_Score);
-        WebglBridge.SetFloatingText(0.5f, 0.2f, $"+{ScoreAddition}");
+        var playerPos = _Camera.WorldToViewportPoint(_Player.transform.position);
+        WebglBridge.SetFloatingText(playerPos.x, playerPos.y, $"+{ScoreAddition}");
         
         foreach (var activeTile in _ActiveTiles)
         {

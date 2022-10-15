@@ -546,6 +546,7 @@ MonoBehaviour:
   _StartLevelSpeed: 5
   _SpeedAcceleration: 0.5
   _VisibleTilesCount: 25
+  _Player: {fileID: 1874103745}
 --- !u!1 &1240084866 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 899ff1bc8e76b8a479074e1e1b73215f, type: 3}
